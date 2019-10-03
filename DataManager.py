@@ -4,12 +4,12 @@ import cv2
 import os
 
 class DataManager:
-    def loadData(self, imagePaths):
+    def loadData(self, imagePaths, resolution):
         data = []
         labels = []
         for imagePath in imagePaths:
             image = cv2.imread(imagePath)
-            image = cv2.resize(image, (100, 100))
+            image = cv2.resize(image, (resolution, resolution))
             data.append(image)
             label = imagePath.split(os.path.sep)[-2]
             labels.append(label)

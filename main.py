@@ -7,15 +7,21 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 import matplotlib.pyplot as plt
 import pickle
+import configparser
+config = configparser.ConfigParser()
+config.read("config.ini")
+
 # Config Items:
-INIT_LR = 0.01
-EPOCHS = 20
-BS = 64
+INIT_LR = config.get('Configuration', 'Learning_Rate', fallback='0.01')
+EPOCHS = config.get('Configuration', 'Epochs', fallback='75')
+BS = config.get('Configuration', 'Batch_Size', fallback='64')
 
 # Load All Data
 print("Loading Data...")
 dataManger = DataManager()
-dataList = dataManger.loadData(dataManger.loadDataPath("fruits"))
+folder = config.get('Configuration', 'Training_Folder_Name', fallback='Training')
+resolution = config.get('Configuration', 'Resolution', fallback='100')
+dataList = dataManger.loadData(dataManger.loadDataPath(folder), resolution)
 data = dataList[0]
 labels = dataList[1]
 
@@ -41,7 +47,7 @@ aug = tf.keras.preprocessing.image.ImageDataGenerator(rotation_range=30, width_s
 	height_shift_range=0.1, shear_range=0.2, zoom_range=0.2,
 	horizontal_flip=True, fill_mode="nearest")
 
-model = PlateModel.build(width=100, height=100, depth=3,
+model = PlateModel.build(width=resolution, height=resolution, depth=3,
 	classes=len(lb.classes_))
 
 # Optimiser in use
@@ -67,7 +73,7 @@ plt.plot(N, H.history["loss"], label="train_loss")
 plt.plot(N, H.history["val_loss"], label="val_loss")
 plt.plot(N, H.history["accuracy"], label="train_acc")
 plt.plot(N, H.history["val_accuracy"], label="val_acc")
-plt.title("Training Loss and Accuracy")
+plt.title("Training Data (86 Types of Fruits)")
 plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")
 plt.legend()
