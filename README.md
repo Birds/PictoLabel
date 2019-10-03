@@ -6,6 +6,10 @@ This project uses a convolutional neural network to identify images.
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+### Demonstration
+
+Todo
+
 ### Prerequisites
 
 
@@ -29,18 +33,14 @@ The following settings can be set in the config.ini file as desired.
 
 ```
 [Configuration]
-Resolution: 100
+Resolution: 100 (In Pixels)
 Learning_Rate: 0.01
 Epochs: 90
 Batch_Size: 64
 Training_Folder_Name: Training
 ```
 
-## Running the tests
-
-Todo
-
-## Built With
+## Running the Program
 
 Todo
 
